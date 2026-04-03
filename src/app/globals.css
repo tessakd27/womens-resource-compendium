@@ -126,6 +126,10 @@
   }
 
   p {
+    color: #BCCDAA;
+  }
+  
+  .bg-card p, .bg-primary p, .bg-accent p, .bg-white p, .bg-primary\/5 p {
     color: #2B3A28;
   }
 }
