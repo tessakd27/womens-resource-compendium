@@ -1,201 +1,187 @@
 "use client";
 
-import { useState } from "react";
-import { Gamepad2, Award, RefreshCcw, Sparkles } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { Gamepad2, AlertCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { triviaData } from "@/data/trivia";
 
-const questions = [
-    {
-        q: "Who was the first woman to win a Nobel Prize?",
-        options: ["Marie Curie", "Rosalind Franklin", "Ada Lovelace", "Jane Addams"],
-        a: 0,
-        fact: "Marie Curie not only was the first woman to win a Nobel Prize in 1903, she remains the only person to win a Nobel Prize in two different scientific fields (Physics and Chemistry)."
-    },
-    {
-        q: "What percentage of doctors were women in the US in 1970 compared to roughly today?",
-        options: ["2% then vs 20% today", "7% then vs 37% today", "15% then vs 50% today", "5% then vs 25% today"],
-        a: 1,
-        fact: "In 1970, only about 7% of doctors were women in the US. Today, that number has grown to over 37%, and currently, the majority of newly enrolled medical students are women!"
-    },
-    {
-        q: "When did women in the United States gain the legal right to have a credit card in their own name without a male cosigner?",
-        options: ["1920", "1955", "1974", "1988"],
-        a: 2,
-        fact: "The Equal Credit Opportunity Act of 1974 made it illegal for any creditor to discriminate against any applicant on the basis of sex or marital status."
-    },
-    {
-        q: "Which pioneer in computer science is often considered the first computer programmer?",
-        options: ["Grace Hopper", "Katherine Johnson", "Margaret Hamilton", "Ada Lovelace"],
-        a: 3,
-        fact: "Ada Lovelace, an English mathematician from the 1800s, recognized that computing machines had applications beyond pure calculation and published the first algorithm intended to be carried out by such a machine."
-    },
-    {
-        q: "In what year did the FDA approve the first oral contraceptive ('The Pill') for use in the United States?",
-        options: ["1950", "1960", "1970", "1980"],
-        a: 1,
-        fact: "The FDA approved Enovid as the first oral contraceptive in 1960. It revolutionized women's health by giving women unprecedented control over their fertility, leading to massive societal shifts."
-    },
-    {
-        q: "Which country was the first in the world to grant women the right to vote in parliamentary elections?",
-        options: ["United States", "United Kingdom", "New Zealand", "Finland"],
-        a: 2,
-        fact: "New Zealand became the first self-governing country in the world to grant all women the right to vote in 1893, long before the US passed the 19th Amendment in 1920."
-    },
-    {
-        q: "Statistically, what is the most commonly used, highly effective reversible method of birth control worldwide?",
-        options: ["The Pill", "Condoms", "The IUD", "Hormonal Implants"],
-        a: 2,
-        fact: "The Intrauterine Device (IUD) is the most widely used reversible contraceptive globally. It is highly praised for its 'set it and forget it' long-term effectiveness, sometimes lasting over a decade."
-    },
-    {
-        q: "What year did the US Supreme Court initially establish a constitutional right to abortion in Roe v. Wade?",
-        options: ["1965", "1973", "1981", "1992"],
-        a: 1,
-        fact: "The landmark Roe v. Wade decision was issued in 1973, legalizing abortion nationally. It was overturned by the Supreme Court nearly 50 years later in 2022 (Dobbs v. Jackson)."
-    }
-];
+// Helper function to shuffle an array
+const shuffleArray = <T,>(array: T[]) => [...array].sort(() => Math.random() - 0.5);
 
-export default function TriviaGame() {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-    const [score, setScore] = useState(0);
-    const [showFact, setShowFact] = useState(false);
-    const [gameFinished, setGameFinished] = useState(false);
+export default function TriviaPage() {
+  const [hasStarted, setHasStarted] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false);
+  
+  // Shuffled options for the current question
+  const [options, setOptions] = useState<string[]>([]);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
-    const currentQ = questions[currentIndex];
+  // Pick 10 random questions out of our 39 for a game run
+  const gameQuestions = useMemo(() => {
+    return shuffleArray(triviaData).slice(0, 10);
+  }, [hasStarted]); // reshuffle when game restarts
 
-    const handleSelect = (index: number) => {
-        if (showFact) return; // Prevent changing answer after submitted
-        setSelectedAnswer(index);
-        setShowFact(true);
+  const currentQuestion = gameQuestions[currentQuestionIndex];
 
-        if (index === currentQ.a) {
-            setScore(s => s + 1);
-        }
-    };
+  // Generate 4 randomized options when question changes
+  useEffect(() => {
+    if (!currentQuestion) return;
+    
+    // Get all false answers
+    const allNames = triviaData.map(t => t.name).filter(name => name !== currentQuestion.name);
+    // Shuffle and pick 3
+    const falseAnswers = shuffleArray(allNames).slice(0, 3);
+    
+    setOptions(shuffleArray([currentQuestion.name, ...falseAnswers]));
+    setSelectedAnswer(null); // Reset selection
+  }, [currentQuestionIndex, currentQuestion]);
 
-    const nextQuestion = () => {
-        if (currentIndex < questions.length - 1) {
-            setCurrentIndex(currentIndex + 1);
-            setSelectedAnswer(null);
-            setShowFact(false);
-        } else {
-            setGameFinished(true);
-        }
-    };
-
-    const restart = () => {
-        setCurrentIndex(0);
-        setSelectedAnswer(null);
-        setShowFact(false);
-        setScore(0);
-        setGameFinished(false);
-    };
-
-    if (gameFinished) {
-        return (
-            <div className="max-w-2xl mx-auto flex flex-col items-center justify-center min-h-[50vh] animate-in zoom-in duration-500">
-                <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-primary/20 mb-6 relative">
-                    <Award className="h-10 w-10 text-primary" />
-                    <Sparkles className="h-6 w-6 text-yellow-500 absolute -top-1 -right-1" />
-                </div>
-                <h1 className="text-4xl font-bold font-heading mb-4 text-center">Trivia Complete!</h1>
-                <p className="text-xl text-muted-foreground mb-8 text-center max-w-md">
-                    You scored <span className="font-bold text-primary">{score}</span> out of {questions.length}. Thank you for playing and learning with us!
-                </p>
-                <Button onClick={restart} size="lg" className="rounded-full px-8 h-14 text-lg">
-                    <RefreshCcw className="mr-2 h-5 w-5" /> Play Again
-                </Button>
-            </div>
-        );
+  const handleAnswerSelect = (answer: string) => {
+    if (selectedAnswer) return; // Prevent double-clicking
+    setSelectedAnswer(answer);
+    
+    if (answer === currentQuestion.name) {
+      setScore(s => s + 1);
     }
 
-    return (
-        <div className="max-w-3xl mx-auto animate-in fade-in duration-500">
-            <div className="text-center space-y-4 mb-10">
-                <div className="inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/20 mb-4 transition-colors duration-300">
-                    <Gamepad2 className="h-8 w-8 text-primary" />
-                </div>
-                <h1 className="text-4xl md:text-5xl font-bold font-heading">Fun Fact Trivia</h1>
-                <p className="text-lg text-muted-foreground">
-                    Test your knowledge about women&apos;s history, health records, and trailblazing achievements.
-                </p>
-            </div>
+    // Auto-advance after 1.5 seconds
+    setTimeout(() => {
+      if (currentQuestionIndex + 1 < gameQuestions.length) {
+        setCurrentQuestionIndex(i => i + 1);
+      } else {
+        setIsGameOver(true);
+      }
+    }, 1500);
+  };
 
-            <Card className="border-border/60 bg-card rounded-3xl overflow-hidden">
-                <div className="h-2 w-full bg-secondary/30 relative">
-                    <div
-                        className="absolute top-0 left-0 h-full bg-primary transition-all duration-500"
-                        style={{ width: `${((currentIndex) / questions.length) * 100}%` }}
-                    />
-                </div>
-                <CardHeader className="text-center pb-2 pt-8">
-                    <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
-                        Question {currentIndex + 1} of {questions.length}
-                    </div>
-                    <CardTitle className="text-2xl md:text-3xl font-heading leading-tight px-4">
-                        {currentQ.q}
-                    </CardTitle>
-                </CardHeader>
+  const restartGame = () => {
+    setHasStarted(false);
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setIsGameOver(false);
+    setTimeout(() => setHasStarted(true), 100); // trigger reshuffle
+  };
 
-                <CardContent className="p-6 md:p-8 space-y-4">
-                    <div className="grid sm:grid-cols-2 gap-4">
-                        {currentQ.options.map((option, idx) => {
-                            const isSelected = selectedAnswer === idx;
-                            const isCorrect = idx === currentQ.a;
-                            let btnClass = "h-auto py-4 px-6 text-left justify-start items-center text-base rounded-2xl whitespace-normal break-words";
+  return (
+    <div className="max-w-4xl mx-auto space-y-12 pb-12 pt-8">
+      {/* Page Header */}
+      <div className="flex flex-col items-center text-center space-y-4 border-4 border-black bg-secondary p-8 retro-shadow text-white relative z-20">
+        <Gamepad2 className="h-16 w-16 mb-4 text-primary" />
+        <h1 className="text-5xl font-bold font-heading uppercase tracking-widest decoration-wavy decoration-4 underline-offset-8 decoration-primary underline">
+          Female Firsts Trivia
+        </h1>
+        <p className="font-sans font-bold text-lg pt-4 max-w-2xl">
+          Test your knowledge about pioneering women who shattered glass ceilings across history!
+        </p>
+      </div>
 
-                            if (showFact) {
-                                if (isCorrect) {
-                                    btnClass += " bg-emerald-500/20 border-emerald-500 text-emerald-700 dark:text-emerald-400 border-2";
-                                } else if (isSelected) {
-                                    btnClass += " bg-destructive/20 border-destructive text-destructive border-2";
-                                } else {
-                                    btnClass += " opacity-50";
-                                }
-                            }
+      {!hasStarted && !isGameOver && (
+        <Card className="retro-shadow border-4 border-black bg-card max-w-2xl mx-auto text-center p-8 relative z-20">
+          <CardHeader>
+            <CardTitle className="font-heading text-3xl">Are you ready?</CardTitle>
+            <CardDescription className="text-base text-card-foreground">
+              You will be given 10 achievements ("firsts") from history. Guess the glorious woman behind it!
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button size="lg" className="px-12 py-6 text-xl uppercase font-bold tracking-widest bg-primary text-black hover:bg-primary/80 border-2 border-black" onClick={() => setHasStarted(true)}>
+              Start Quiz
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
-                            return (
-                                <Button
-                                    key={idx}
-                                    variant={showFact ? "outline" : "secondary"}
-                                    className={btnClass}
-                                    onClick={() => handleSelect(idx)}
-                                    disabled={showFact}
-                                >
-                                    <span className="mr-3 font-bold opacity-60">{String.fromCharCode(65 + idx)}.</span> {option}
-                                </Button>
-                            );
-                        })}
-                    </div>
+      {hasStarted && !isGameOver && (
+        <div className="space-y-6 relative z-20">
+          <div className="flex justify-between items-center bg-primary px-6 py-2 border-2 border-black retro-shadow-sm font-bold uppercase text-black font-sans">
+            <span>Score: {score}</span>
+            <span>Question {currentQuestionIndex + 1} of {gameQuestions.length}</span>
+          </div>
 
-                    {showFact && (
-                        <div className="mt-8 p-6 bg-primary/10 border border-primary/20 rounded-2xl animate-in slide-in-from-bottom-2 duration-300">
-                            <h4 className="font-heading font-bold text-primary text-xl flex items-center gap-2 mb-2">
-                                <Sparkles className="h-5 w-5" /> Did you know?
-                            </h4>
-                            <p className="text-foreground leading-relaxed">
-                                {currentQ.fact}
-                            </p>
-                        </div>
-                    )}
-                </CardContent>
+          <Card className="retro-shadow border-4 border-black bg-card">
+            <CardContent className="p-8 md:p-12 space-y-8">
+              <div className="text-center space-y-2">
+                <span className="text-primary-foreground font-bold uppercase text-sm tracking-widest">Achievement Clue</span>
+                <h2 className="text-2xl md:text-3xl font-heading font-bold text-black border-2 bg-white/80 border-black p-6 tracking-wide">
+                  "{currentQuestion?.clue}"
+                </h2>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {options.map((option, idx) => {
+                  let btnState = "bg-white hover:bg-neutral-100 text-black"; // Default
+                  
+                  if (selectedAnswer) {
+                    if (option === currentQuestion.name) {
+                      btnState = "bg-green-400 text-black border-4 border-green-800 pointer-events-none"; // Correct
+                    } else if (option === selectedAnswer) {
+                      btnState = "bg-red-400 text-black border-4 border-red-800 pointer-events-none"; // Wrong picked
+                    } else {
+                       btnState = "opacity-50 bg-white pointer-events-none"; // Others
+                    }
+                  }
 
-                <CardFooter className="bg-secondary/10 border-t p-6 flex justify-between items-center">
-                    <div className="font-medium text-muted-foreground">
-                        Score: <span className="text-foreground">{score}</span>
-                    </div>
-                    <Button
-                        onClick={nextQuestion}
-                        disabled={!showFact}
-                        size="lg"
-                        className="rounded-full px-8"
+                  return (
+                    <Button 
+                      key={idx}
+                      variant="outline" 
+                      className={`h-auto py-6 px-4 text-base md:text-lg border-2 border-black retro-shadow-sm font-bold justify-start whitespace-normal text-left transition-all ${btnState}`}
+                      onClick={() => handleAnswerSelect(option)}
                     >
-                        {currentIndex === questions.length - 1 ? "Finish" : "Next Question"}
+                      {option}
                     </Button>
-                </CardFooter>
-            </Card>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
         </div>
-    );
+      )}
+
+      {isGameOver && (
+        <Card className="retro-shadow border-4 border-black bg-secondary text-white max-w-2xl mx-auto text-center p-8 relative z-20">
+          <CardHeader>
+            <Sparkles className="h-16 w-16 mx-auto mb-4 text-[#00FF00]" />
+            <CardTitle className="font-heading text-4xl uppercase tracking-widest text-[#00FF00] drop-shadow-[2px_2px_0_#000]">
+              Game Over!
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="text-2xl font-bold bg-black p-4 border-2 border-white inline-block">
+              Final Score: {score} / {gameQuestions.length}
+            </div>
+            
+            <p className="text-lg font-sans">
+              {score >= 8 ? "Astounding! You really know your female pioneers!" :
+               score >= 5 ? "Great job! A solid grasp of history." : 
+               "Every incorrect answer is just a new fun fact to learn today!"}
+            </p>
+
+            <div className="pt-8">
+              <Button size="lg" className="bg-primary text-black hover:bg-primary/80 border-2 border-black px-8 py-6 uppercase font-bold tracking-widest" onClick={restartGame}>
+                Play Again
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Info Section */}
+      <Card className="border-4 border-black bg-card mt-12 retro-shadow relative z-20">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+             <AlertCircle className="h-5 w-5" /> Why learning "Firsts" matters
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="leading-relaxed font-bold">
+            Throughout history, women's monumental achievements have often been overshadowed or omitted from mainstream education. By testing your knowledge on these pioneers, you are actively participating in reclaiming and honoring their remarkable legacies. 
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
