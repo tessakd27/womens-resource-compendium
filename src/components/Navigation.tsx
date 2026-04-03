@@ -9,6 +9,7 @@ const links = [
     { href: "/catalog", label: "Health Catalog" },
     { href: "/sexual-health", label: "Sexual Health" },
     { href: "/rights-and-abortion", label: "Rights & Abortion" },
+    { href: "/body-image", label: "Body Image" },
     { href: "/global-perspective", label: "Global Perspective" },
     { href: "/assault-and-recovery", label: "Assault & Recovery" },
     { href: "/media-representation", label: "Media & Stereotypes" },
