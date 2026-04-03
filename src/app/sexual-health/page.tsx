@@ -1,4 +1,4 @@
-import { HeartHandshake, ShieldCheck, HeartPulse } from "lucide-react";
+import { HeartHandshake, ShieldCheck, HeartPulse, AlertTriangle, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -109,6 +109,87 @@ export default function SexualHealth() {
                                     <li><strong>Keep it one-sided:</strong> Never flip the dam over during use. One side touches you, one side touches them.</li>
                                     <li><strong>Dispose:</strong> Use a new dam if moving between different body parts. Throw it away after use.</li>
                                 </ol>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+
+                {/* STIs & Safe Sex Deep Dive Section */}
+                <div className="space-y-6 pt-6">
+                    <div className="flex items-center gap-3 border-b pb-4">
+                        <AlertTriangle className="h-6 w-6 text-primary" />
+                        <h2 className="text-2xl font-bold font-heading">Understanding STIs & Safe Sex</h2>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                        {/* Curable vs Treatable */}
+                        <Card className="bg-card border-border/60 rounded-3xl col-span-1 md:col-span-2">
+                            <CardHeader className="py-4">
+                                <CardTitle className="text-xl">Curable vs. Treatable (Persistent)</CardTitle>
+                                <CardDescription>Not all Sexually Transmitted Infections are the same</CardDescription>
+                            </CardHeader>
+                            <CardContent className="text-sm text-muted-foreground space-y-4">
+                                <p>It's vital to understand the difference between curable conditions and those that are lifelong but medically manageable.</p>
+                                <div className="grid sm:grid-cols-2 gap-4 mt-2">
+                                    <div className="bg-white/50 p-4 rounded-xl border-l-4 border-green-500">
+                                        <h4 className="font-bold text-black mb-1">Curable (Bacterial/Parasitic)</h4>
+                                        <ul className="list-disc pl-4 space-y-1">
+                                            <li>Chlamydia</li>
+                                            <li>Syphilis</li>
+                                            <li>Gonorrhea</li>
+                                            <li>"Crabs" (Pubic Lice)</li>
+                                        </ul>
+                                    </div>
+                                    <div className="bg-primary/20 p-4 rounded-xl border-l-4 border-orange-500">
+                                        <h4 className="font-bold text-black mb-1">Treatable & Persistent (Viral)</h4>
+                                        <ul className="list-disc pl-4 space-y-1">
+                                            <li><strong>HPV</strong> (Persistent strains)</li>
+                                            <li><strong>Herpes</strong></li>
+                                            <li><strong>HIV</strong></li>
+                                            <li><strong>Hepatitis</strong> B & C</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* The Four H's */}
+                        <Card className="bg-card border-border/60 rounded-3xl col-span-1 md:col-span-2">
+                            <CardHeader className="py-4">
+                                <CardTitle className="text-xl">The "Four H's" Deep Dive</CardTitle>
+                            </CardHeader>
+                            <CardContent className="text-sm text-muted-foreground space-y-5">
+                                <div>
+                                    <h4 className="font-bold text-black flex items-center gap-2"><ArrowRight className="h-4 w-4" /> HIV/AIDS</h4>
+                                    <p className="mt-1">HIV attacks the body's immune system, specifically the T-cells. AIDS is the final, most severe stage of the untreated infection. It is found in and transmitted through semen, blood, vaginal secretions, and breast milk. Modern advanced medications exist, but are expensive and globally inaccessible.</p>
+                                </div>
+                                <div className="border-t border-black/10 pt-3">
+                                    <h4 className="font-bold text-black flex items-center gap-2"><ArrowRight className="h-4 w-4" /> Herpes</h4>
+                                    <p className="mt-1">Incredibly common—roughly 60% of all Americans have a strain of the Herpes virus (Type 1 or 2). It causes blistering sores on the genitals or face. <strong>A cold sore on your mouth is Herpes.</strong> (Canker sores on the inside of the mouth are <em>not</em> Herpes).</p>
+                                </div>
+                                <div className="border-t border-black/10 pt-3">
+                                    <h4 className="font-bold text-black flex items-center gap-2"><ArrowRight className="h-4 w-4" /> Hepatitis B</h4>
+                                    <p className="mt-1">A harsh liver infection transmitted when blood, semen, or other fluids from an infected person enters a non-infected person's body (via sexual contact or sharing needles). Symptoms include dark urine, jaundice, and severe fatigue. There is a vaccine available for Hepatitis A and B.</p>
+                                </div>
+                                <div className="border-t border-black/10 pt-3">
+                                    <h4 className="font-bold text-black flex items-center gap-2"><ArrowRight className="h-4 w-4" /> HPV (Genital Warts)</h4>
+                                    <p className="mt-1">Many people who contract Human Papillomavirus will never show symptoms. The viral strain that causes visible genital warts is largely physically harmless; however, a different persistent strain of HPV is the primary cause of cervical cancer in women.</p>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Critical Safe Sex Rules */}
+                        <Card className="bg-card border-border/60 rounded-3xl col-span-1 md:col-span-2">
+                            <CardHeader className="py-4">
+                                <CardTitle className="text-xl">Crucial Safe Sex Rules</CardTitle>
+                            </CardHeader>
+                            <CardContent className="text-sm text-muted-foreground space-y-4">
+                                <ul className="list-disc pl-5 space-y-3 font-medium">
+                                    <li><strong>Never use oil-based lube with latex:</strong> Common oil-based lubricants like Vaseline, lotion, or Vitamin E oil will rapidly break down the latex in condoms and dental dams, causing them to break. Always use water-based or silicone-based lube.</li>
+                                    <li><strong>Never use two condoms:</strong> Wearing two condoms at once creates harsh friction between the latex layers, which will inevitably cause them both to tear or break during use.</li>
+                                    <li><strong>The Wallet Rule:</strong> Condoms can melt, degrade, and tear easily if they are stored in a hot, pressured environment like a back-pocket wallet for long periods. Store them in a cool, safe place!</li>
+                                    <li><strong>Transmission Awareness:</strong> STIs are not just transferred through penetrative intercourse. They can be transmitted via skin-to-skin contact, oral sex, fingering, discharge, blisters, blood, saliva, and the birth canal. Regular STI testing is essential for both partners!</li>
+                                </ul>
                             </CardContent>
                         </Card>
                     </div>
