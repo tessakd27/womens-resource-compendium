@@ -28,8 +28,8 @@ export default function Home() {
         <div className="inline-flex items-center border-2 border-black px-4 py-1.5 text-sm font-bold uppercase tracking-widest bg-primary text-black cursor-default relative z-10 retro-shadow-sm">
           <Sparkles className="h-4 w-4 mr-2" /> Hello World
         </div>
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-heading text-black tracking-tight max-w-4xl relative z-10 leading-none uppercase drop-shadow-[2px_2px_0_#fff]">
-          Empowering Knowledge for <br /> <span className="bg-primary px-2 border-2 border-black">Women's Health & Rights</span>
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-heading text-black tracking-tight max-w-4xl relative z-10 leading-tight uppercase drop-shadow-[2px_2px_0_#fff]">
+          Empowering Knowledge for <br /> <span className="inline-block mt-2 bg-primary px-2 border-2 border-black">Women's Health & Rights</span>
         </h1>
         <p className="text-lg md:text-xl text-black font-sans font-bold max-w-2xl leading-relaxed relative z-10 bg-white/80 p-4 border-2 border-black">
           A comprehensive compendium dedicated to women's health, bodily autonomy, mental well-being, and recovery. Find the resources you need, when you need them.

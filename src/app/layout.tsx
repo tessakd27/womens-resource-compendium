@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora, Nunito } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
+import { BackgroundSparkles } from "@/components/BackgroundSparkles";
 
 const fontHeading = Lora({
   weight: ["400", "500", "600", "700"],
@@ -27,9 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fontSans.variable} ${fontHeading.variable} font-sans antialiased min-h-screen flex flex-col bg-background text-foreground retro-bg pattern-dots selection:bg-primary selection:text-primary-foreground`}>
+      <body className={`${fontSans.variable} ${fontHeading.variable} font-sans antialiased min-h-screen flex flex-col bg-background text-foreground retro-bg pattern-dots selection:bg-primary selection:text-primary-foreground relative`}>
+        <BackgroundSparkles />
         <Navigation />
-        <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative z-10">
           {children}
         </main>
       </body>
