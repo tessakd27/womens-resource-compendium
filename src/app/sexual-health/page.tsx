@@ -69,6 +69,51 @@ export default function SexualHealth() {
                     </div>
                 </div>
 
+                {/* Barrier Methods Section */}
+                <div className="space-y-6 pt-6">
+                    <div className="flex items-center gap-3 border-b pb-4">
+                        <ShieldCheck className="h-6 w-6 text-primary" />
+                        <h2 className="text-2xl font-bold font-heading">Barrier Methods & Protection</h2>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <Card className="bg-card border-border/60 rounded-3xl">
+                            <CardHeader className="py-4">
+                                <CardTitle className="text-xl">How to Use a Condom</CardTitle>
+                                <CardDescription>External Condoms (over the penis or toy)</CardDescription>
+                            </CardHeader>
+                            <CardContent className="text-sm text-muted-foreground space-y-4">
+                                <p>Used correctly, condoms are the only method that protects against both unintended pregnancy and sexually transmitted infections (STIs).</p>
+                                <ol className="list-decimal pl-5 space-y-2 font-medium">
+                                    <li><strong>Check the package:</strong> Check the expiration date. Ensure there are no tears by pressing the wrapper to feel a slight cushion of air.</li>
+                                    <li><strong>Open carefully:</strong> Tear the wrapper along the edge. Never use teeth or scissors.</li>
+                                    <li><strong>Determine direction:</strong> The condom should roll down easily like a beanie (not a sombrero).</li>
+                                    <li><strong>Pinch the tip:</strong> Pinch the reservoir tip at the top to squeeze the air out—this leaves room for ejaculate and prevents popping.</li>
+                                    <li><strong>Roll it down:</strong> Place it on the head of the fully erect penis or toy and roll it all the way down to the base.</li>
+                                    <li><strong>Remove safely:</strong> After ejaculation, hold the rim of the condom at the base before pulling out so it doesn't slip off.</li>
+                                </ol>
+                            </CardContent>
+                        </Card>
+
+                        <Card className="bg-card border-border/60 rounded-3xl">
+                            <CardHeader className="py-4">
+                                <CardTitle className="text-xl">How to Use a Dental Dam</CardTitle>
+                                <CardDescription>For oral sex on a vulva or anus</CardDescription>
+                            </CardHeader>
+                            <CardContent className="text-sm text-muted-foreground space-y-4">
+                                <p>A dental dam is a thin, rectangular piece of latex or polyurethane used to prevent the exchange of bodily fluids passing STIs during oral sex.</p>
+                                <ol className="list-decimal pl-5 space-y-2 font-medium">
+                                    <li><strong>Check the dam:</strong> Ensure it's not expired or torn. If you don't have one, you can snip the tip and base off a condom and cut it lengthwise to lay it flat.</li>
+                                    <li><strong>Add lube (optional):</strong> Apply a small amount of water-based or silicone-based lube on the side touching the vulva/anus to increase sensation. Don't use oil-based lubes with latex.</li>
+                                    <li><strong>Place it flat:</strong> Lay the dam completely flat over the vulva or anus. Do not stretch it tight, as this increases the likelihood of tearing.</li>
+                                    <li><strong>Keep it one-sided:</strong> Never flip the dam over during use. One side touches you, one side touches them.</li>
+                                    <li><strong>Dispose:</strong> Use a new dam if moving between different body parts. Throw it away after use.</li>
+                                </ol>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+
                 <div className="grid md:grid-cols-2 gap-8">
                     {/* History & Side Effects Section */}
                     <div className="space-y-6">
