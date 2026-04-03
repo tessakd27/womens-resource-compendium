@@ -1,4 +1,4 @@
-import { Tv, Image as ImageIcon, MessageSquareWarning, Sparkles } from "lucide-react";
+import { Tv, Image as ImageIcon, MessageSquareWarning, Sparkles, Smartphone, UserX, Activity } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function MediaRepresentation() {
@@ -48,6 +48,51 @@ export default function MediaRepresentation() {
                         </p>
                     </CardContent>
                 </Card>
+            </div>
+
+            {/* The Dual Reality of Social Media (NYT Article Integration) */}
+            <div className="mt-8 pt-6 border-t border-primary/20 space-y-6">
+                <div className="flex items-center gap-3">
+                    <Smartphone className="h-6 w-6 text-primary" />
+                    <h2 className="text-2xl font-bold font-heading">The Dual Reality of Social Media</h2>
+                </div>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                    Social media platforms like Instagram and TikTok have a profound effect on body image—but it isn't strictly negative. Depending on your feed, it can either be a toxic trap or a powerful motivational tool.
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-6 mt-4">
+                    <Card className="bg-destructive/5 border-destructive/20 rounded-3xl">
+                        <CardHeader>
+                            <CardTitle className="font-heading text-destructive flex items-center gap-2">
+                                <UserX className="h-5 w-5" /> The Pitfalls: Toxic Comparisons
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-muted-foreground space-y-3 leading-relaxed">
+                            <p>
+                                It gets easier and easier to make toxic comparisons because you are actively seeing <em>what people want you to see</em>. Influencers typically post heavily edited, carefully planned highlight reels of simply the best 15 seconds of their day.
+                            </p>
+                            <p>
+                                Viewing lifestyles purely focused on exercise or extreme dieting without the balance of normal life (like taking rest days or eating dessert) creates completely unrealistic standards that can push young people toward eating disorders and isolation.
+                            </p>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="bg-primary/5 border-primary/20 rounded-3xl">
+                        <CardHeader>
+                            <CardTitle className="font-heading text-primary flex items-center gap-2">
+                                <Activity className="h-5 w-5" /> The Positives: Finding Motivation
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-muted-foreground space-y-3 leading-relaxed">
+                            <p>
+                                Conversely, social media is an incredible tool for finding role models. Seeing fitness achievements can serve as an inspiring reminder of what hard work looks like. 
+                            </p>
+                            <p>
+                                Many content creators try to uplift their followers, providing routines, recipes, and necessary guidance for beginners. When balanced correctly, it is a fantastic tool that provides the "push" some people need to become healthier without tearing down their self-worth.
+                            </p>
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
 
             <div className="bg-card rounded-3xl p-6 md:p-8 mt-8 border-primary/20 shadow-sm">
